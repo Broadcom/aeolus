@@ -1,0 +1,6 @@
+*.bin
+*.elf
+*.o
+*.lds
+.*.sw*
+tags
