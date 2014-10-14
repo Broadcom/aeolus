@@ -24,11 +24,11 @@ _start:
 	move	sp, t0
 
 	la	t1, _ebss
-1:
 	beq	t0, t1, 2f
+1:
 	sw	zero, 0(t0)
 	addiu	t0, 4
-	b	1b
+	bne	t0, t1, 1b
 
 2:
 	la	a0, _linux
