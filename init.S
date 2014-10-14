@@ -32,6 +32,10 @@ _start:
 
 2:
 	la	a0, _linux
+	la	a1, _cmdline
+	la	a2, _dtb_start
+	la	a3, _dtb_end
+	subu	a3, a2
 
 	la	t0, main
 	jr	t0

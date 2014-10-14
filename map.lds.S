@@ -29,6 +29,16 @@ SECTIONS {
 		*(.init);
 	}
 
+	.cmdline 0x80000f00 : {
+		_cmdline = .;
+	}
+
+	.dtb 0x80001400 : {
+		_dtb_start = .;
+		*(.dtb);
+		_dtb_end = .;
+	}
+
 	.main 0x8000d400 : {
 		*(.text);
 		*(.text.*);
