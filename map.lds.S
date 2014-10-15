@@ -25,44 +25,47 @@
 ENTRY(_start)
 
 SECTIONS {
-	.init 0x80000000 : {
+	. = 0x80000000;
+	.init : {
 		*(.init);
 	}
 
-	.cmdline 0x80000f00 : {
-		_cmdline = .;
-	}
+	. = 0x80000f00;
+	_cmdline = .;
 
-	.dtb 0x80001400 : {
-		_dtb_start = .;
+	. = 0x80001400;
+	_dtb_start = .;
+	.dtb : {
 		*(.dtb);
-		_dtb_end = .;
 	}
+	. = ALIGN(4);
+	_dtb_end = .;
 
-	.main 0x8000d400 : {
+	. = 0x8000d400;
+	.main : {
 		*(.text);
 		*(.text.*);
 		*(.rodata);
 		*(.data);
 	}
 
-	.fill 0x8000fff8 : {
+	. = 0x8000fff8;
+	.fill : {
 		/* FIXME: why does this take 8 bytes? */
-		LONG(0x00);
+		LONG(0);
 	}
 
-	_linux 0x80010000 : {
-		_linux = .;
-	}
+	. = 0x80010000;
+	_linux = .;
 
-	.bss 0x87000000 : {
-		. = ALIGN(4);
-		_fbss = .;
+	. = 0x87000000;
+	_fbss = .;
+	.bss : {
 		*(.bss*);
 		*(.sbss*);
-		. = ALIGN(4);
-		_ebss = .;
 	} =0x00
+	. = ALIGN(4);
+	_ebss = .;
 
 	/DISCARD/ : {
 		*(.MIPS.options)
