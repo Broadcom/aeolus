@@ -3,4 +3,5 @@
 *.o
 *.lds
 .*.sw*
+board.dtb
 tags
