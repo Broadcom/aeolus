@@ -9,9 +9,19 @@
 #define __force
 
 #define REG_ADDR(x)		((void *)KSEG1 + (x))
+#define BIT(x)			(1 << (x))
+
 #define REG_DDR_WIDTH		REG_ADDR(0x150b5004)
 #define REG_DDR_TECH		REG_ADDR(0x150b2000)
 #define REG_SDRAM_SPACE		REG_ADDR(0x14e00284)
+
+#define REG_USB_SETUP		REG_ADDR(0x15400200)
+#define USB_SETUP_IPP		BIT(5)
+#define USB_SETUP_IOC		BIT(4)
+
+#define REG_USB_SWAP		REG_ADDR(0x1540020c)
+#define USB_SWAP_DATA		(BIT(1) | BIT(4))
+#define USB_SWAP_DESC		(BIT(0) | BIT(3))
 
 static char newdtb[65536];
 
@@ -115,12 +125,29 @@ static int setup_ddr(void)
 	return 32 << shift;
 }
 
+static void setup_usb(void)
+{
+	uint32_t tmp;
+
+	tmp = __raw_readl(REG_USB_SETUP);
+	tmp &= ~USB_SETUP_IPP;	/* IPP=0 => active high */
+	tmp |= USB_SETUP_IOC;	/* IOC=1 => active low */
+	__raw_writel(tmp, REG_USB_SETUP);
+
+	tmp = __raw_readl(REG_USB_SWAP);
+	tmp &= ~USB_SWAP_DATA;
+	tmp |= USB_SWAP_DESC;
+	__raw_writel(tmp, REG_USB_SWAP);
+}
+
 void main(kernel_entry_t kernel_entry,
 	  char *cmdline,
 	  void *dtb_start,
 	  int dtb_len)
 {
 	int memsize_mb = setup_ddr();
+
+	setup_usb();
 
 	if (fdt_open_into(dtb_start, newdtb, sizeof(newdtb)) < 0)
 		die("can't open builtin DTB");
