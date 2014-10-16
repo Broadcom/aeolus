@@ -32,4 +32,4 @@ dtb.o: board.dtb
 
 .PHONY: clean
 clean:
-	rm -f *.o map.lds
+	rm -f $(OBJS) map.lds aeolus.bin aeolus.elf
