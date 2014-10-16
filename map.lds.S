@@ -28,6 +28,7 @@ SECTIONS {
 	. = 0x80000000;
 	.init : {
 		*(.init);
+		*(.mipsinit);
 	}
 
 	. = 0x80000f00;

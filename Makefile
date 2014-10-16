@@ -18,7 +18,7 @@ CFLAGS		:= $(COMMON_FLAGS) -ffreestanding -Os \
 		   -I. -Ilibfdt
 AFLAGS		:= $(COMMON_FLAGS)
 
-CORE_OBJS	:= init.o main.o dtb.o
+CORE_OBJS	:= init.o bmips5000.o main.o dtb.o
 OBJS		:= $(CORE_OBJS) $(LIBFDT_OBJS) $(NEWLIB_OBJS)
 
 aeolus.bin: aeolus.elf
