@@ -5,3 +5,5 @@
 .*.sw*
 board.dtb
 tags
+
+newlib/build/
