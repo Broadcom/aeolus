@@ -12,7 +12,7 @@ NEWLIB_INCDIR	:= newlib/newlib/libc/include
 
 LIBFDT_OBJS	:= libfdt/fdt.o libfdt/fdt_ro.o libfdt/fdt_rw.o libfdt/fdt_wip.o
 
-COMMON_FLAGS	:= -mno-abicalls
+COMMON_FLAGS	:= -mno-abicalls -Wall -fno-strict-aliasing
 CFLAGS		:= $(COMMON_FLAGS) -ffreestanding -Os \
 		   -nostdlib -nostdinc -I$(NEWLIB_INCDIR) \
 		   -I. -Ilibfdt
