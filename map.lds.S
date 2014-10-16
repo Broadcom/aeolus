@@ -12,7 +12,7 @@
  * +-------------+-------------------------------+----------------------------+
  * | 0x0000_1400 | Device tree blob              | Device tree blob           |
  * +-------------+-------------------------------+----------------------------+
- * | 0x0000_d400 | Bootloader C code             |                            |
+ * | 0x0000_c400 | Bootloader C code             |                            |
  * +-------------+-------------------------------+----------------------------+
  * | 0x0001_0000 | Kernel image start,           | Kernel image start,        |
  * |             | kernel entry address          | kernel entry address       |
@@ -41,11 +41,10 @@ SECTIONS {
 	. = ALIGN(4);
 	_dtb_end = .;
 
-	. = 0x8000d400;
+	. = 0x8000c400;
 	.main : {
-		*(.text);
-		*(.text.*);
-		*(.rodata);
+		*(.text*);
+		*(.rodata*);
 		*(.data);
 	}
 

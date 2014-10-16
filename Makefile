@@ -10,13 +10,16 @@ NEWLIB_BUILD	:= newlib/build
 NEWLIB_OBJS	:= $(NEWLIB_BUILD)/mips-none-elf/newlib/libc.a
 NEWLIB_INCDIR	:= newlib/newlib/libc/include
 
+LIBFDT_OBJS	:= libfdt/fdt.o libfdt/fdt_ro.o libfdt/fdt_rw.o libfdt/fdt_wip.o
+
 COMMON_FLAGS	:= -mno-abicalls
 CFLAGS		:= $(COMMON_FLAGS) -ffreestanding -Os \
-		   -nostdlib -nostdinc -I$(NEWLIB_INCDIR)
+		   -nostdlib -nostdinc -I$(NEWLIB_INCDIR) \
+		   -I. -Ilibfdt
 AFLAGS		:= $(COMMON_FLAGS)
 
 CORE_OBJS	:= init.o main.o dtb.o
-OBJS		:= $(CORE_OBJS) $(NEWLIB_OBJS)
+OBJS		:= $(CORE_OBJS) $(LIBFDT_OBJS) $(NEWLIB_OBJS)
 
 aeolus.bin: aeolus.elf
 	$(OBJCOPY) -O binary $< $@
