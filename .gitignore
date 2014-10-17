@@ -10,3 +10,4 @@ zephyr.img
 
 newlib/build/
 ProgramStore/ProgramStore
+ProgramStore/ps.map
