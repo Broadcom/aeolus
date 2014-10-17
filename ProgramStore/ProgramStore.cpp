@@ -521,8 +521,8 @@ int main(int argc, char* argv[])
         proghead.ulTotalCompressedLength = totalLength;
 
         // If the dual-file option isn't being used, we can use a longer file name.
-        strncpy( proghead.cFilename, outfilename, 63 );
-        proghead.cFilename[63] = '\0';
+        strncpy( proghead.cFilename, outfilename, 48 );
+        proghead.cFilename[47] = '\0';
 
         if (dual_file)
         {
