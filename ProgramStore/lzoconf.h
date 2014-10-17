@@ -1,31 +1,3 @@
-//**************************************************************************
-//
-//    Copyright 2000 Broadcom Corporation
-//    All Rights Reserved
-//    No portions of this material may be reproduced in any form without the
-//    written permission of:
-//             Broadcom Corporation
-//             16251 Laguna Canyon Road
-//             Irvine, California  92618
-//    All information contained in this document is Broadcom Corporation
-//    company private, proprietary, and trade secret.
-//
-//
-//
-//**************************************************************************
-//    Filename: minilzo.c
-//    Author:   converted by Chris Zacker
-//    Creation Date: December 5, 2000
-//
-//**************************************************************************
-//    Description:
-//
-//	   minilzo.c -- mini subset of the LZO real-time data compression library	
-//		
-//**************************************************************************
-//    Revision History:
-//
-
 /* lzoconf.h -- configuration for the LZO real-time data compression library
 
    This file is part of the LZO real-time data compression library.
