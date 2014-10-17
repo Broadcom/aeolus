@@ -54,6 +54,7 @@ zephyr.img: aeolus.bin $(PROGSTORE) $(LINUXDIR)/vmlinux
 $(LINUXDIR)/.config:
 	$(MAKE) -C $(LINUXDIR) ARCH=mips bcm3384_defconfig
 
+.PHONY: $(LINUXDIR)/vmlinux
 $(LINUXDIR)/vmlinux: $(LINUXDIR)/.config
 	$(MAKE) -C $(LINUXDIR) ARCH=mips vmlinux
 
