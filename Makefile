@@ -13,6 +13,9 @@
 # GNU General Public License for more details.
 #
 
+# override this to use "make zephyr.img"
+LINUXDIR	:= ../linux
+
 CROSS_COMPILE	:= mips-linux-
 CC		:= $(CROSS_COMPILE)gcc
 LD		:= $(CROSS_COMPILE)ld
@@ -20,6 +23,8 @@ CPP		:= $(CROSS_COMPILE)cpp
 AR		:= $(CROSS_COMPILE)ar
 RANLIB		:= $(CROSS_COMPILE)ranlib
 OBJCOPY		:= $(CROSS_COMPILE)objcopy
+
+PROGSTORE	:= ProgramStore/ProgramStore
 
 NEWLIB_BUILD	:= newlib/build
 NEWLIB_OBJS	:= $(NEWLIB_BUILD)/mips-none-elf/newlib/libc.a
@@ -38,6 +43,19 @@ OBJS		:= $(CORE_OBJS) $(LIBFDT_OBJS) $(NEWLIB_OBJS)
 
 aeolus.bin: aeolus.elf
 	$(OBJCOPY) -O binary $< $@
+
+zephyr.img: aeolus.bin $(PROGSTORE) $(LINUXDIR)/vmlinux
+	$(OBJCOPY) -O binary $(LINUXDIR)/vmlinux vmlinux.bin
+	cat aeolus.bin vmlinux.bin > concat.bin
+	$(PROGSTORE) -f concat.bin -o $@ -c 4 -s 0x3384 -a 0 -v 003.000 \
+		-f2 dummy.txt
+	rm -f vmlinux.bin concat.bin
+
+$(LINUXDIR)/.config:
+	$(MAKE) -C $(LINUXDIR) ARCH=mips bcm3384_defconfig
+
+$(LINUXDIR)/vmlinux: $(LINUXDIR)/.config
+	$(MAKE) -C $(LINUXDIR) ARCH=mips vmlinux
 
 aeolus.elf: $(OBJS) map.lds
 	$(LD) $^ -o $@ -T map.lds
@@ -68,6 +86,10 @@ $(NEWLIB_OBJS): $(NEWLIB_BUILD)/Makefile
 %.o: %.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
+$(PROGSTORE):
+	$(MAKE) -C ProgramStore
+
 .PHONY: clean
 clean:
 	rm -rf $(OBJS) map.lds aeolus.bin aeolus.elf $(NEWLIB_BUILD)
+	$(MAKE) -C ProgramStore clean

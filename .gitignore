@@ -6,4 +6,7 @@
 board.dtb
 tags
 
+zephyr.img
+
 newlib/build/
+ProgramStore/ProgramStore
