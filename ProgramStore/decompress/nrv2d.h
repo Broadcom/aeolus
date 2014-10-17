@@ -1,23 +1,17 @@
-/*---------------------------------------------------------------------------
-    CONFIDENTIAL AND PROPRIETARY
-    Copyright (c) 2000, Broadcom Corporation (unpublished)       /\     
-    All Rights Reserved.                                  _     /  \     _ 
-    _____________________________________________________/ \   /    \   / \_
-                                                            \_/      \_/  
-    File: NRV2D Decompression H-File from UCL library
+/*
+ * Copyright (C) 2000 Broadcom Corporation
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
 
-    Description: 
-
-    History:
-    -------------------------------------------------------------------------
-    $Log: nrv2d.h $
-    Revision 1.1  2004/09/20 12:47:24  msieweke
-    Initial revision
-    Revision 1.2  2004/03/03 17:52:35  msieweke
-    Modified for one-pass build.
-    Revision 1.1  2002/01/31 16:19:01  msieweke
-    Initial revision
----------------------------------------------------------------------------*/
 #ifndef N2D_D_H
 
 #define N2D_D_H
