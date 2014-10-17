@@ -1,3 +1,18 @@
+/*
+ * Aeolus - a program to boot the Zephyr MIPS
+ * Copyright (C) 2014 Broadcom Corporation
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
@@ -148,6 +163,10 @@ void main(kernel_entry_t kernel_entry,
 	int memsize_mb = setup_ddr();
 
 	setup_usb();
+
+	/* Let the kernel use its builtin DTB if ours is bogus */
+	if (fdt_check_header(dtb_start) < 0)
+		kernel_entry(0, 0, 0);
 
 	if (fdt_open_into(dtb_start, newdtb, sizeof(newdtb)) < 0)
 		die("can't open builtin DTB");
