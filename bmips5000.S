@@ -952,6 +952,12 @@ LEAF(set_clock_ratio)
 	nop
 	.set    reorder
 END(set_clock_ratio)
+
+#define OVR_DIS_CRS				_MM_MAKEMASK1(14)
+#define OVR_DIS_JTB				_MM_MAKEMASK1(15)
+#define OVR_EN_ROR				_MM_MAKEMASK1(24)
+#define OVR_DIS_PREF30				_MM_MAKEMASK1(27)
+
 /*
  * Function: set_zephyr
  * Arguments:   None
@@ -968,7 +974,7 @@ LEAF(set_zephyr)
 	.word	0x4088b00f      /* mtc0    t0, $22, 15 */
 
 	.word	0x4008b008      /* mfc0    t0, $22, 8 */
-        li      t1, 0x09000000	/* turn off pref */
+        li      t1, OVR_DIS_CRS | OVR_DIS_JTB | OVR_EN_ROR | OVR_DIS_PREF30
         or      t0, t0, t1
 	.word	0x4088b008      /* mtc0    t0, $22, 8 */
         sync
