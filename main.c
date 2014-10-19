@@ -18,6 +18,12 @@
 #include <string.h>
 #include "libfdt.h"
 
+#define REG_DDR_WIDTH		REG_ADDR(0x150b5004)
+#define REG_DDR_TECH		REG_ADDR(0x150b2000)
+#define REG_SDRAM_SPACE		REG_ADDR(0x14e00284)
+#define USB_BASE		0x15400200
+#define UART_BASE		0x14e00520
+
 #define KSEG0			0x80000000
 #define KSEG1			0xa0000000
 #define __iomem
@@ -26,19 +32,13 @@
 #define REG_ADDR(x)		((void *)KSEG1 + (x))
 #define BIT(x)			(1 << (x))
 
-#define REG_DDR_WIDTH		REG_ADDR(0x150b5004)
-#define REG_DDR_TECH		REG_ADDR(0x150b2000)
-#define REG_SDRAM_SPACE		REG_ADDR(0x14e00284)
-
-#define REG_USB_SETUP		REG_ADDR(0x15400200)
+#define REG_USB_SETUP		REG_ADDR(USB_BASE + 0x00)
 #define USB_SETUP_IPP		BIT(5)
 #define USB_SETUP_IOC		BIT(4)
 
-#define REG_USB_SWAP		REG_ADDR(0x1540020c)
+#define REG_USB_SWAP		REG_ADDR(USB_BASE + 0x0c)
 #define USB_SWAP_DATA		(BIT(1) | BIT(4))
 #define USB_SWAP_DESC		(BIT(0) | BIT(3))
-
-#define UART_BASE		0x14e00520
 
 #define REG_UART_CONTROL	REG_ADDR(UART_BASE + 0x00)
 #define UART_CONTROL_RXTIME_s	0
