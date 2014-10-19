@@ -38,6 +38,26 @@
 #define USB_SWAP_DATA		(BIT(1) | BIT(4))
 #define USB_SWAP_DESC		(BIT(0) | BIT(3))
 
+#define UART_BASE		0x14e00520
+
+#define REG_UART_CONTROL	REG_ADDR(UART_BASE + 0x00)
+#define UART_CONTROL_RXTIME_s	0
+#define UART_CONTROL_STOP_s	8
+#define UART_CONTROL_DBIT_s	12
+#define UART_CONTROL_RXEN	BIT(21)
+#define UART_CONTROL_TXEN	BIT(22)
+#define UART_CONTROL_BAUDEN	BIT(23)
+
+#define REG_UART_BAUD		REG_ADDR(UART_BASE + 0x04)
+
+#define REG_UART_MISC		REG_ADDR(UART_BASE + 0x08)
+#define UART_MISC_RXFIFO_s	8
+#define UART_MISC_TXFIFO_s	12
+
+#define REG_UART_EXTINPUT	REG_ADDR(UART_BASE + 0x0c)
+#define REG_UART_INTSTAT	REG_ADDR(UART_BASE + 0x10)
+#define REG_UART_FIFO		REG_ADDR(UART_BASE + 0x14)
+
 static char newdtb[65536];
 
 typedef void (*kernel_entry_t)(unsigned long zero,
@@ -155,6 +175,28 @@ static void setup_usb(void)
 	__raw_writel(tmp, REG_USB_SWAP);
 }
 
+static void setup_uart(void)
+{
+	/* port enabled, 8N1 */
+	__raw_writel(UART_CONTROL_RXEN |
+		     UART_CONTROL_TXEN |
+		     UART_CONTROL_BAUDEN |
+		     (1 << UART_CONTROL_RXTIME_s) |
+		     (7 << UART_CONTROL_STOP_s) |
+		     (3 << UART_CONTROL_DBIT_s), REG_UART_CONTROL);
+
+	/* 115200bps */
+	__raw_writel(0xe, REG_UART_BAUD);
+
+	/* FIFO IRQ thresholds */
+	__raw_writel((8 << UART_MISC_RXFIFO_s) |
+		     (8 << UART_MISC_TXFIFO_s),
+		     REG_UART_MISC);
+
+	/* disable IRQs */
+	__raw_writel(0, REG_UART_INTSTAT);
+}
+
 void main(kernel_entry_t kernel_entry,
 	  char *cmdline,
 	  void *dtb_start,
@@ -162,6 +204,7 @@ void main(kernel_entry_t kernel_entry,
 {
 	int memsize_mb = setup_ddr();
 
+	setup_uart();
 	setup_usb();
 
 	/* Let the kernel use its builtin DTB if ours is bogus */
