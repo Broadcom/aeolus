@@ -18,6 +18,7 @@
 #include <string.h>
 #include "libfdt.h"
 
+#define REG_CHIP_ID		REG_ADDR(0x14e00000)
 #define REG_DDR_WIDTH		REG_ADDR(0x150b5004)
 #define REG_DDR_TECH		REG_ADDR(0x150b2000)
 #define REG_SDRAM_SPACE		REG_ADDR(0x14e00284)
@@ -62,7 +63,8 @@ static char newdtb[65536];
 
 typedef void (*kernel_entry_t)(unsigned long zero,
 			       unsigned long machine_type,
-			       unsigned long dtb_pa);
+			       unsigned long dtb_pa,
+			       unsigned long chip_id);
 
 /* Utility functions */
 
@@ -203,13 +205,14 @@ void main(kernel_entry_t kernel_entry,
 	  int dtb_len)
 {
 	int memsize_mb = setup_ddr();
+	unsigned long chip_id = __raw_readl(REG_CHIP_ID);
 
 	setup_uart();
 	setup_usb();
 
 	/* Let the kernel use its builtin DTB if ours is bogus */
 	if (fdt_check_header(dtb_start) < 0)
-		kernel_entry(0, 0, 0);
+		kernel_entry(0, 0, 0, chip_id);
 
 	if (fdt_open_into(dtb_start, newdtb, sizeof(newdtb)) < 0)
 		die("can't open builtin DTB");
@@ -221,5 +224,5 @@ void main(kernel_entry_t kernel_entry,
 		die("can't pack new dtb");
 	memcpy(dtb_start, newdtb, fdt_totalsize(newdtb));
 
-	kernel_entry(0, 0xffffffff, virt_to_phys(dtb_start));
+	kernel_entry(0, 0xffffffff, virt_to_phys(dtb_start), chip_id);
 }
