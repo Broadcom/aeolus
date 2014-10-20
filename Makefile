@@ -19,6 +19,14 @@ LINUXDIR	:= ../linux
 # pick your board from $LINUXDIR/arch/mips/boot/dts/
 DEFAULT_BOARD	:= bcm93384wvg
 
+# This is a slightly modified MetaROUTER OpenWRT rootfs (pretty much the
+# bare minimum needed to boot the system).
+# Source: http://openwrt.wk.cz/kamikaze/openwrt-mr-mips-rootfs-18961.tar.gz
+# A few of the startup scripts were changed; the binaries are as-is from
+# upstream.
+# Leave this variable blank for no rootfs.
+DEFAULT_ROOTFS	:= mr-rootfs.cpio.xz
+
 CROSS_COMPILE	:= mips-linux-
 CC		:= $(CROSS_COMPILE)gcc
 LD		:= $(CROSS_COMPILE)ld
@@ -56,6 +64,13 @@ zephyr.img: aeolus.bin $(PROGSTORE) $(LINUXDIR)/vmlinux
 
 $(LINUXDIR)/.config:
 	$(MAKE) -C $(LINUXDIR) ARCH=mips bcm3384_defconfig
+ifneq ($(DEFAULT_ROOTFS),)
+	xz -d < $(DEFAULT_ROOTFS) > $(LINUXDIR)/rootfs.cpio
+	cd $(LINUXDIR) && ./scripts/config \
+		--set-str CONFIG_INITRAMFS_SOURCE rootfs.cpio \
+		--set-val CONFIG_INITRAMFS_ROOT_UID 0 \
+		--set-val CONFIG_INITRAMFS_ROOT_GID 0
+endif
 
 board.dtb: $(LINUXDIR)/.config
 	$(MAKE) -C $(LINUXDIR) ARCH=mips dtbs
