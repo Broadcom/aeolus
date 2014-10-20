@@ -16,6 +16,9 @@
 # override this to use "make zephyr.img"
 LINUXDIR	:= ../linux
 
+# pick your board from $LINUXDIR/arch/mips/boot/dts/
+DEFAULT_BOARD	:= bcm93384wvg
+
 CROSS_COMPILE	:= mips-linux-
 CC		:= $(CROSS_COMPILE)gcc
 LD		:= $(CROSS_COMPILE)ld
@@ -53,6 +56,10 @@ zephyr.img: aeolus.bin $(PROGSTORE) $(LINUXDIR)/vmlinux
 
 $(LINUXDIR)/.config:
 	$(MAKE) -C $(LINUXDIR) ARCH=mips bcm3384_defconfig
+
+board.dtb: $(LINUXDIR)/.config
+	$(MAKE) -C $(LINUXDIR) ARCH=mips dtbs
+	cp -f $(LINUXDIR)/arch/mips/boot/dts/$(DEFAULT_BOARD).dtb board.dtb
 
 .PHONY: $(LINUXDIR)/vmlinux
 $(LINUXDIR)/vmlinux: $(LINUXDIR)/.config
