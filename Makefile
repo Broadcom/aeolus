@@ -62,7 +62,7 @@ zephyr.img: aeolus.bin $(PROGSTORE) $(LINUXDIR)/vmlinux
 		-f2 dummy.txt
 	rm -f vmlinux.bin concat.bin
 
-$(LINUXDIR)/.config:
+$(LINUXDIR)/.linux-configured:
 	$(MAKE) -C $(LINUXDIR) ARCH=mips bcm3384_defconfig
 ifneq ($(DEFAULT_ROOTFS),)
 	xz -d < $(DEFAULT_ROOTFS) > $(LINUXDIR)/rootfs.cpio
@@ -71,13 +71,14 @@ ifneq ($(DEFAULT_ROOTFS),)
 		--set-val CONFIG_INITRAMFS_ROOT_UID 0 \
 		--set-val CONFIG_INITRAMFS_ROOT_GID 0
 endif
-
-board.dtb: $(LINUXDIR)/.config
 	$(MAKE) -C $(LINUXDIR) ARCH=mips dtbs
+	touch $@
+
+board.dtb: $(LINUXDIR)/.linux-configured
 	cp -f $(LINUXDIR)/arch/mips/boot/dts/$(DEFAULT_BOARD).dtb board.dtb
 
 .PHONY: $(LINUXDIR)/vmlinux
-$(LINUXDIR)/vmlinux: $(LINUXDIR)/.config
+$(LINUXDIR)/vmlinux: $(LINUXDIR)/.linux-configured
 	$(MAKE) -C $(LINUXDIR) ARCH=mips vmlinux
 
 aeolus.elf: $(OBJS) map.lds
