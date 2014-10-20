@@ -3,16 +3,18 @@ Aeolus: a program to boot the Zephyr MIPS
 
 ## Basic usage
 
-Install the MIPS cross toolchain in your PATH, download a suitable Linux
-kernel source tree, and then run:
+Install a suitable
+[32-bit MIPS BE toolchain](http://www.linux-mips.org/wiki/Toolchains) called
+<code>mips-linux-gcc</code> in your PATH, and then run:
 
     git clone git://github.com/Broadcom/aeolus.git
+    git clone -b bcm3384 git://github.com/cernekee/linux.git
     cd aeolus
-    cp $LINUXDIR/arch/mips/bcm3384/dts/*.dts* .
-    dtc bcm93384wvg.dts -O dtb -o board.dtb
-    make zephyr.img LINUXDIR=/path/to/linux
+    make zephyr.img
 
-(note: this section is under construction; more details to be filled in soon)
+This will build a BCM3384 kernel with default options, targeted for the
+BCM93384WVG reference platform, and using <code>mr-rootfs.cpio.xz</code>
+as an initramfs.
 
 ## Boot sequence
 
