@@ -25,7 +25,7 @@ DEFAULT_BOARD	:= bcm93384wvg
 # A few of the startup scripts were changed; the binaries are as-is from
 # upstream.
 # Leave this variable blank for no rootfs.
-DEFAULT_ROOTFS	:= mr-rootfs.cpio.xz
+DEFAULT_ROOTFS	:= misc/mr-rootfs.cpio.xz
 
 CROSS_COMPILE	:= mips-linux-
 CC		:= $(CROSS_COMPILE)gcc
@@ -59,7 +59,7 @@ zephyr.img: aeolus.bin $(PROGSTORE) $(LINUXDIR)/vmlinux
 	$(OBJCOPY) -O binary $(LINUXDIR)/vmlinux vmlinux.bin
 	cat aeolus.bin vmlinux.bin > concat.bin
 	$(PROGSTORE) -f concat.bin -o $@ -c 4 -s 0x3384 -a 0 -v 003.000 \
-		-f2 dummy.txt
+		-f2 misc/dummy.txt
 	rm -f vmlinux.bin concat.bin
 
 $(LINUXDIR)/.linux-configured:
