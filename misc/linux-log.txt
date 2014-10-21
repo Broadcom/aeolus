@@ -1,0 +1,210 @@
+Linux version 3.18.0-rc1+ (kpc@vm03) (gcc version 4.8.4 20140811 (prerelease) (Broadcom stbgcc-4.8-1.0) ) #14 SMP Tue Oct 21 11:43:37 PDT 2014
+CPU0 revision is: 00025a11 (Broadcom BMIPS5000)
+FPU revision is: 00130001
+bootconsole [uart0] enabled
+MIPS: machine is Broadcom BCM93384WVG
+Determined physical RAM map:
+ memory: 08000000 @ 00000000 (usable)
+Initrd not found or empty - disabling initrd
+Zone ranges:
+  Normal   [mem 0x00000000-0x07ffffff]
+  HighMem  empty
+Movable zone start for each node
+Early memory node ranges
+  node   0: [mem 0x00000000-0x07ffffff]
+Initmem setup node 0 [mem 0x00000000-0x07ffffff]
+Primary instruction cache 32kB, VIPT, 4-way, linesize 64 bytes.
+Primary data cache 32kB, 4-way, VIPT, cache aliases, linesize 32 bytes
+MIPS secondary cache 256kB, 8-way, linesize 128 bytes.
+PERCPU: Embedded 7 pages/cpu @81108000 s6912 r0 d21760 u32768
+Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 32512
+Kernel command line: root=/dev/mtdblock3 ro noinitrd console=ttyS0,115200 
+PID hash table entries: 512 (order: -1, 2048 bytes)
+Dentry cache hash table entries: 16384 (order: 4, 65536 bytes)
+Inode-cache hash table entries: 8192 (order: 3, 32768 bytes)
+Memory: 118520K/131072K available (4979K kernel code, 178K rwdata, 676K rodata, 5164K init, 256K bss, 12552K reserved, 0K highmem)
+SLUB: HWalign=128, Order=0-3, MinObjects=0, CPUs=2, Nodes=1
+Hierarchical RCU implementation.
+	RCU restricting CPUs from NR_CPUS=4 to nr_cpu_ids=2.
+RCU: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=2
+NR_IRQS:128
+Calibrating delay loop... 531.45 BogoMIPS (lpj=1062912)
+pid_max: default: 32768 minimum: 301
+Mount-cache hash table entries: 1024 (order: 0, 4096 bytes)
+Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes)
+SMP: Booting CPU1...
+CPU1 revision is: 00025a11 (Broadcom BMIPS5000)
+FPU revision is: 00130001
+Primary instruction cache 32kB, VIPT, 4-way, linesize 64 bytes.
+Primary data cache 32kB, 4-way, VIPT, cache aliases, linesize 32 bytes
+MIPS secondary cache 256kB, 8-way, linesize 128 bytes.
+Synchronize counters for CPU 1: done.
+SMP: CPU1 is running
+Brought up 2 CPUs
+devtmpfs: initialized
+NET: Registered protocol family 16
+SCSI subsystem initialized
+usbcore: registered new interface driver usbfs
+usbcore: registered new interface driver hub
+usbcore: registered new device driver usb
+Switched to clocksource MIPS
+cfg80211: Calling CRDA to update world regulatory domain
+NET: Registered protocol family 2
+TCP established hash table entries: 1024 (order: 0, 4096 bytes)
+TCP bind hash table entries: 1024 (order: 1, 8192 bytes)
+TCP: Hash tables configured (established 1024 bind 1024)
+TCP: reno registered
+UDP hash table entries: 256 (order: 1, 8192 bytes)
+UDP-Lite hash table entries: 256 (order: 1, 8192 bytes)
+NET: Registered protocol family 1
+RPC: Registered named UNIX socket transport module.
+RPC: Registered udp transport module.
+RPC: Registered tcp transport module.
+RPC: Registered tcp NFSv4.1 backchannel transport module.
+futex hash table entries: 512 (order: 4, 65536 bytes)
+fuse init (API version 7.23)
+io scheduler noop registered (default)
+bcm63xx_uart 14e00520.serial: ttyS0 at MMIO 0x14e00520 (irq = 8, base_baud = 1687500) is a bcm63xx_uart
+z¬Ëk½±[ttyS0] enabled
+console [ttyS0] enabled
+bootconsole [uart0] disabled
+bootconsole [uart0] disabled
+usbcore: registered new interface driver asix
+usbcore: registered new interface driver ax88179_178a
+usbcore: registered new interface driver cdc_ether
+usbcore: registered new interface driver net1080
+usbcore: registered new interface driver cdc_subset
+usbcore: registered new interface driver zaurus
+usbcore: registered new interface driver cdc_ncm
+ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+ehci-platform: EHCI generic platform driver
+ehci-platform 15400300.usb: EHCI Host Controller
+ehci-platform 15400300.usb: new USB bus registered, assigned bus number 1
+ehci-platform 15400300.usb: irq 41, io mem 0x15400300
+ehci-platform 15400300.usb: USB 2.0 started, EHCI 1.00
+hub 1-0:1.0: USB hub found
+hub 1-0:1.0: 2 ports detected
+ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+ohci-platform: OHCI generic platform driver
+ohci-platform 15400400.usb: Generic Platform OHCI controller
+ohci-platform 15400400.usb: new USB bus registered, assigned bus number 2
+ohci-platform 15400400.usb: irq 40, io mem 0x15400400
+hub 2-0:1.0: USB hub found
+hub 2-0:1.0: 2 ports detected
+usbcore: registered new interface driver usb-storage
+TCP: cubic registered
+NET: Registered protocol family 10
+sit: IPv6 over IPv4 tunneling driver
+NET: Registered protocol family 17
+Freeing unused kernel memory: 5164K (805c5000 - 80ad0000)
+
+init started: BusyBox v1.11.2 (2012-06-18 18:04:15 CEST)
+
+Please press Enter to activate this console. usb 1-1: new high-speed USB device number 2 using ehci-platform
+usb-storage 1-1:1.0: USB Mass Storage device detected
+scsi host0: usb-storage 1-1:1.0
+usb 1-2: new high-speed USB device number 3 using ehci-platform
+asix 1-2:1.0 eth0: register 'asix' at usb-15400300.usb-2, ASIX AX88772 USB 2.0 Ethernet, 00:50:b6:06:76:95
+scsi 0:0:0:0: Direct-Access     Kingston DataTraveler 112 1.00 PQ: 0 ANSI: 2
+sd 0:0:0:0: [sda] 15636304 512-byte logical blocks: (8.00 GB/7.45 GiB)
+sd 0:0:0:0: [sda] Write Protect is off
+sd 0:0:0:0: [sda] No Caching mode page found
+sd 0:0:0:0: [sda] Assuming drive cache: write through
+ sda: sda1
+sd 0:0:0:0: [sda] Attached SCSI removable disk
+
+
+
+BusyBox v1.11.2 (2012-06-18 18:04:15 CEST) built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+
+  _______                     ________        __
+ |       |.-----.-----.-----.|  |  |  |.----.|  |_
+ |   -   ||  _  |  -__|     ||  |  |  ||   _||   _|
+ |_______||   __|_____|__|__||________||__|  |____|
+          |__| W I R E L E S S   F R E E D O M
+ KAMIKAZE (8.09.2, r18961) -------------------------
+  * 10 oz Vodka       Shake well with ice and strain
+  * 10 oz Triple sec  mixture into 10 shot glasses.
+  * 10 oz lime juice  Salute!
+ ---------------------------------------------------
+root@(none):/# 
+root@(none):/# random: nonblocking pool is initialized
+root@(none):/# 
+root@(none):/# cat /proc/meminfo 
+MemTotal:         123684 kB
+MemFree:          112320 kB
+MemAvailable:     115548 kB
+Buffers:               0 kB
+Cached:             6656 kB
+SwapCached:            0 kB
+Active:              684 kB
+Inactive:           6128 kB
+Active(anon):        156 kB
+Inactive(anon):        0 kB
+Active(file):        528 kB
+Inactive(file):     6128 kB
+Unevictable:           0 kB
+Mlocked:               0 kB
+HighTotal:             0 kB
+HighFree:              0 kB
+LowTotal:         123684 kB
+LowFree:          112320 kB
+SwapTotal:             0 kB
+SwapFree:              0 kB
+Dirty:                 0 kB
+Writeback:             0 kB
+AnonPages:           192 kB
+Mapped:              876 kB
+Shmem:                 0 kB
+Slab:               3800 kB
+SReclaimable:        532 kB
+SUnreclaim:         3268 kB
+KernelStack:         280 kB
+PageTables:           24 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:       61840 kB
+Committed_AS:        804 kB
+VmallocTotal:    1015800 kB
+VmallocUsed:          16 kB
+VmallocChunk:    1015776 kB
+root@(none):/# cat /proc/cpuinfo 
+system type             : BCM3384
+machine                 : Broadcom BCM93384WVG
+processor               : 0
+cpu model               : Broadcom BMIPS5000 V1.1  FPU V0.1
+BogoMIPS                : 531.45
+wait instruction        : yes
+microsecond timers      : yes
+tlb_entries             : 64
+extra interrupt vector  : yes
+hardware watchpoint     : no
+isa                     : mips1 mips2 mips32r1
+ASEs implemented        :
+shadow register sets    : 1
+kscratch registers      : 0
+package                 : 0
+core                    : 0
+VCED exceptions         : not available
+VCEI exceptions         : not available
+
+processor               : 1
+cpu model               : Broadcom BMIPS5000 V1.1  FPU V0.1
+BogoMIPS                : 400.38
+wait instruction        : yes
+microsecond timers      : yes
+tlb_entries             : 64
+extra interrupt vector  : yes
+hardware watchpoint     : no
+isa                     : mips1 mips2 mips32r1
+ASEs implemented        :
+shadow register sets    : 1
+kscratch registers      : 0
+package                 : 0
+core                    : 0
+VCED exceptions         : not available
+VCEI exceptions         : not available
+
+root@(none):/# 

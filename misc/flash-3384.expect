@@ -1,0 +1,92 @@
+#!/usr/bin/expect -f
+
+# host/port for ip2ser
+set host "localhost"
+set port 2300
+
+# network configuration for the target board
+set ip "192.168.1.100"
+set netmask "255.255.255.0"
+set gateway "192.168.1.1"
+set mac "00:10:18:12:34:56"
+
+# TFTP server address
+set tftp "192.168.1.10"
+set tftp_image "zephyr.img"
+
+proc waitfor { a } {
+	expect {
+		timeout {
+			puts "TIMEOUT"
+			exit 1
+		}
+		$a {
+			return
+		}
+	}
+}
+
+proc reset_board { } {
+	puts "*******************************************************"
+	puts "RESETTING BOARD"
+	puts "*******************************************************"
+	send "\x1eR"
+}
+
+proc magic_sysrq { c } {
+	send "\x1e"
+	send "B"
+	sleep 1
+	send $c
+	sleep 1
+}
+
+set send_slow {10 .100}
+
+set timeout 10
+
+set pid [spawn telnet $host $port]
+reset_board
+waitfor "Enter '1', '2'"
+send "p"
+
+waitfor "Board IP Address"
+send "$ip\r"
+waitfor "Board IP Mask"
+send "$netmask\r"
+waitfor "Board IP Gateway"
+send "$gateway\r"
+waitfor "Board MAC Address"
+send "$mac\r"
+waitfor "Internal/External"
+send "\r"
+
+waitfor "Main Menu"
+send "d"
+
+waitfor "Board TFTP Server IP"
+send "$tftp\r"
+waitfor "Enter filename"
+send "$tftp_image\r"
+waitfor "Destination image"
+send "3\r"
+
+set timeout 45
+waitfor "Store parameters to flash"
+send "y\r"
+
+waitfor "Main Menu"
+send "b"
+
+set timeout 60
+waitfor "Scanning DS Channel"
+send "cd cm_hal\rscan_stop\r"
+waitfor "CM"
+send "cd /\r"
+
+sleep 2
+send "\x1d"
+waitfor "telnet>"
+send "quit\r"
+waitfor "Connection closed"
+exit 0

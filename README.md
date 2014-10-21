@@ -16,6 +16,42 @@ This will build a BCM3384 kernel with default options, targeted for the
 BCM93384WVG reference platform, and using <code>mr-rootfs.cpio.xz</code>
 as an initramfs.
 
+## Flashing images
+
+After building zephyr.img, copy it to a TFTP server.  Then make sure your
+serial ports are set up correctly:
+
+* UART0 is the CM console.  Typically this is broken out on a daughtercard;
+the daughtercard is connected to the mainboard with a 14-pin cable.  The
+daughtercard should provide either a standard RS232 female DB-9, or a USB
+'B' port connected to an FTDI converter chip.
+* UART1 is the Linux console.  This might just be a 4-pin header with 3.3V,
+ground, and 3.3V TX/RX lines.
+
+Both ports should be configured for 115200 8N1, no flow control.
+
+To flash a new zephyr.img:
+
+1. Wait for the <code>Enter '1', '2', or 'p'</code> prompt on the CM
+console while booting
+2. Hit 'p' and then set up your IP addresses when prompted
+3. For <code>Internal/External phy?</code> you can answer 'a' for "auto"
+4. From the menu, choose 'd' for <code>Download and save to flash</code>
+5. Enter TFTP server information
+6. For <code>Destination image</code>, choose '3'
+7. Answer 'y' to "Store parameters to flash"
+
+After the board reboots, it should bring up the Zephyr CPU and you should
+see Linux booting on UART1.
+
+If you have [ip2ser](http://ip2ser.sf.net) set up to talk to the CM console
+on localhost:2300 and control power to the target board, you can run
+[misc/flash-3384.expect](misc/flash-3384.expect) to automate the flashing
+process.  Edit the IP addresses at the top of the file to taste.
+
+Sample boot logs: [CM console](misc/cm-log.txt),
+[Linux console](misc/linux-log.txt).
+
 ## Boot sequence
 
 The BCM3384 SoC has two onchip big-endian MIPS32R1 processors:
