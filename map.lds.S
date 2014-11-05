@@ -34,12 +34,12 @@
  * | 0x0001_0000 | Kernel image start,           | Kernel image start,        |
  * |             | kernel entry address          | kernel entry address       |
  * +-------------+-------------------------------+----------------------------+
- * | 0x0700_0000 | Scratch space (stack top,     |                            |
+ * | 0x07f0_0000 | Scratch space (stack top,     |                            |
  * | (absolute)  | dtb, staging area)            |                            |
  * +-------------+-------------------------------+----------------------------+
  */
 
-#define SCRATCH_START		0x87000000
+#define SCRATCH_START		0x87f00000
 
 ENTRY(_start)
 
