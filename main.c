@@ -136,12 +136,20 @@ static int set_memory_node(void *dtb, int dram_size_mb)
 
 	fdt_setprop_string(dtb, offset, "device_type", "memory");
 
-	/* Linux always owns 0MB - 128MB */
-	fdt_setprop_u32(dtb, offset, "reg", 0x0);
-	fdt_appendprop_u32(dtb, offset, "reg", 128 << 20);
+	if (!VIPER) {
+		/* Zephyr Linux always owns 0MB - 128MB */
+		fdt_setprop_u32(dtb, offset, "reg", 0x0);
+		fdt_appendprop_u32(dtb, offset, "reg", 128 << 20);
+	} else {
+		/* MEM_START can be 8600_0000 (normal) or 8700_0000 (lite) */
+		fdt_setprop_u32(dtb, offset, "reg", MEM_START - KSEG0);
+		fdt_appendprop_u32(dtb, offset, "reg", 0x88000000 - MEM_START);
+		fdt_appendprop_u32(dtb, offset, "reg", 0x0e000000);
+		fdt_appendprop_u32(dtb, offset, "reg", 32 << 20);
+	}
 
 	if (dram_size_mb > 256) {
-		/* skip CM @ 128MB and the memory hole @ 256MB */
+		/* Linux always owns all RAM above 256MB */
 		dram_size_mb -= 256;
 		fdt_appendprop_u32(dtb, offset, "reg", 0x20000000);
 		fdt_appendprop_u32(dtb, offset, "reg", dram_size_mb << 20);

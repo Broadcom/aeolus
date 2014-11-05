@@ -16,9 +16,19 @@
 # override this to use "make zephyr.img"
 LINUXDIR	:= ../linux
 
+ifneq ($(VIPER),1)
 # pick your board from $LINUXDIR/arch/mips/boot/dts/
 DEFAULT_BOARD	:= bcm93384wvg
 MEM_START	:= 0x80000000
+MIPS_INIT	:= bmips5000.o
+VIPER		:= 0
+else
+# experimental Viper MIPS builds
+DEFAULT_BOARD	:= bcm93384wvg_viper
+MEM_START	:= 0x86000000
+PHYSICAL_START	:= 0x86010000
+MIPS_INIT	:= bmips4350.o
+endif
 
 # This is a slightly modified MetaROUTER OpenWRT rootfs (pretty much the
 # bare minimum needed to boot the system).
@@ -44,13 +54,14 @@ NEWLIB_INCDIR	:= newlib/newlib/libc/include
 
 LIBFDT_OBJS	:= libfdt/fdt.o libfdt/fdt_ro.o libfdt/fdt_rw.o libfdt/fdt_wip.o
 
-COMMON_FLAGS	:= -mno-abicalls -Wall -fno-strict-aliasing
+COMMON_FLAGS	:= -mno-abicalls -Wall -fno-strict-aliasing \
+		   -DMEM_START=$(MEM_START) -DVIPER=$(VIPER)
 CFLAGS		:= $(COMMON_FLAGS) -ffreestanding -Os \
 		   -nostdlib -nostdinc -I$(NEWLIB_INCDIR) \
 		   -I. -Ilibfdt
 AFLAGS		:= $(COMMON_FLAGS)
 
-CORE_OBJS	:= init.o bmips5000.o main.o dtb.o
+CORE_OBJS	:= init.o $(MIPS_INIT) main.o dtb.o
 OBJS		:= $(CORE_OBJS) $(LIBFDT_OBJS) $(NEWLIB_OBJS)
 
 aeolus.bin: aeolus.elf
@@ -71,6 +82,12 @@ ifneq ($(DEFAULT_ROOTFS),)
 		--set-str CONFIG_INITRAMFS_SOURCE rootfs.cpio \
 		--set-val CONFIG_INITRAMFS_ROOT_UID 0 \
 		--set-val CONFIG_INITRAMFS_ROOT_GID 0
+endif
+ifneq ($(PHYSICAL_START),)
+	cd $(LINUXDIR) && ./scripts/config \
+		--enable CONFIG_CRASH_DUMP \
+		--enable CONFIG_PROC_VMCORE \
+		--set-val CONFIG_PHYSICAL_START $(PHYSICAL_START)
 endif
 	$(MAKE) -C $(LINUXDIR) ARCH=mips dtbs
 	touch $@
