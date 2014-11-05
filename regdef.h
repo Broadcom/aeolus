@@ -125,4 +125,12 @@ symbol:		.frame	sp, framesize, rpc
 
 #define KSEG0			0x80000000
 
+	.macro	BARRIER
+	.set	mips32
+	ssnop
+	ssnop
+	ssnop
+	.set	mips0
+	.endm
+
 #endif /* _ASM_REGDEF_H */

@@ -19,6 +19,11 @@
 	.global	_start
 	.ent	_start
 _start:
+	/* CONFIG.K0 = 0x02 (uncached kseg0) */
+	li	t0, 0x02
+	mtc0	t0, $16
+	BARRIER
+
 	la	t0, 1f
 	jr	t0
 
