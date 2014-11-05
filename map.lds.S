@@ -12,10 +12,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * BCM3384 BMIPS5000 memory map:
+ * BCM3384 bootloader memory map:
+ *   For Linux on Zephyr, the offsets are based on PA 0x0000_0000
+ *   For Linux on Viper, the offsets are based on PA 0x0600_0000
  *
  * +-------------+-------------------------------+----------------------------+
- * | Phys addr   | Bootloader usage              | Linux usage                |
+ * | Offset      | Bootloader usage              | Linux usage                |
  * +-------------+-------------------------------+----------------------------+
  * | 0x0000_0000 | Main CPU reset vector / entry | Secondary CPU reset vector |
  * |             | MIPS init code (asm)          | (CPU1)                     |
@@ -33,23 +35,25 @@
  * |             | kernel entry address          | kernel entry address       |
  * +-------------+-------------------------------+----------------------------+
  * | 0x0700_0000 | Scratch space (stack top,     |                            |
- * |             | dtb, staging area)            |                            |
+ * | (absolute)  | dtb, staging area)            |                            |
  * +-------------+-------------------------------+----------------------------+
  */
+
+#define SCRATCH_START		0x87000000
 
 ENTRY(_start)
 
 SECTIONS {
-	. = 0x80000000;
+	. = MEM_START;
 	.init : {
 		*(.init);
 		*(.mipsinit);
 	}
 
-	. = 0x80000f00;
+	. = MEM_START + 0x0f00;
 	_cmdline = .;
 
-	. = 0x80001400;
+	. = MEM_START + 0x1400;
 	_dtb_start = .;
 	.dtb : {
 		*(.dtb);
@@ -57,23 +61,23 @@ SECTIONS {
 	. = ALIGN(4);
 	_dtb_end = .;
 
-	. = 0x8000c400;
+	. = MEM_START + 0xc400;
 	.main : {
 		*(.text*);
 		*(.rodata*);
 		*(.data);
 	}
 
-	. = 0x8000fff8;
+	. = MEM_START + 0xfff8;
 	.fill : {
 		/* FIXME: why does this take 8 bytes? */
 		LONG(0);
 	}
 
-	. = 0x80010000;
+	. = MEM_START + 0x10000;
 	_linux = .;
 
-	. = 0x87000000;
+	. = SCRATCH_START;
 	_fbss = .;
 	.bss : {
 		*(.bss*);

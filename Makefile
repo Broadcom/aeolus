@@ -18,6 +18,7 @@ LINUXDIR	:= ../linux
 
 # pick your board from $LINUXDIR/arch/mips/boot/dts/
 DEFAULT_BOARD	:= bcm93384wvg
+MEM_START	:= 0x80000000
 
 # This is a slightly modified MetaROUTER OpenWRT rootfs (pretty much the
 # bare minimum needed to boot the system).
@@ -102,7 +103,7 @@ $(NEWLIB_OBJS): $(NEWLIB_BUILD)/Makefile
 	$(MAKE) -C $(NEWLIB_BUILD)
 
 %.lds: %.lds.S
-	$(CPP) -P $< -o $@
+	$(CPP) -DMEM_START=$(MEM_START) -P $< -o $@
 
 %.o: %.S
 	$(CC) -c $(AFLAGS) $< -o $@
