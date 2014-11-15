@@ -135,3 +135,7 @@ $(PROGSTORE):
 clean:
 	rm -rf $(OBJS) map.lds aeolus.bin aeolus.elf $(NEWLIB_BUILD)
 	$(MAKE) -C ProgramStore clean
+
+.PHONY: distclean
+distclean: clean
+	rm -f zephyr.img board.dtb
