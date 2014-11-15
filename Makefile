@@ -75,7 +75,7 @@ zephyr.img: aeolus.bin $(PROGSTORE) $(LINUXDIR)/vmlinux
 	rm -f vmlinux.bin concat.bin
 
 $(LINUXDIR)/.linux-configured:
-	$(MAKE) -C $(LINUXDIR) ARCH=mips bcm3384_defconfig
+	$(MAKE) -C $(LINUXDIR) ARCH=mips bmips_be_defconfig
 ifneq ($(DEFAULT_ROOTFS),)
 	xz -d < $(DEFAULT_ROOTFS) > $(LINUXDIR)/rootfs.cpio
 	cd $(LINUXDIR) && ./scripts/config \

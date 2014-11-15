@@ -15,7 +15,7 @@ Install the <code>mips-linux-gcc</code> cross toolchain:
 Then clone the bootloader and kernel source trees:
 
     git clone git://github.com/Broadcom/aeolus.git
-    git clone -b bcm3384 git://github.com/cernekee/linux.git
+    git clone -b bmips-multi-v2 git://github.com/cernekee/linux.git
 
 To build:
 
