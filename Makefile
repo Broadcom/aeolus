@@ -45,6 +45,7 @@ CPP		:= $(CROSS_COMPILE)cpp
 AR		:= $(CROSS_COMPILE)ar
 RANLIB		:= $(CROSS_COMPILE)ranlib
 OBJCOPY		:= $(CROSS_COMPILE)objcopy
+DTC		:= dtc
 
 PROGSTORE	:= ProgramStore/ProgramStore
 
@@ -89,11 +90,10 @@ ifneq ($(PHYSICAL_START),)
 		--enable CONFIG_PROC_VMCORE \
 		--set-val CONFIG_PHYSICAL_START $(PHYSICAL_START)
 endif
-	$(MAKE) -C $(LINUXDIR) ARCH=mips dtbs
 	touch $@
 
-board.dtb: $(LINUXDIR)/.linux-configured
-	cp -f $(LINUXDIR)/arch/mips/boot/dts/$(DEFAULT_BOARD).dtb board.dtb
+board.dtb:
+	$(DTC) -O dtb -o $@ $(LINUXDIR)/arch/mips/boot/dts/$(DEFAULT_BOARD).dts
 
 .PHONY: $(LINUXDIR)/vmlinux
 $(LINUXDIR)/vmlinux: $(LINUXDIR)/.linux-configured
