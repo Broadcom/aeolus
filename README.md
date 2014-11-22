@@ -3,6 +3,8 @@ Aeolus: a program to boot the Zephyr MIPS
 
 ## Compiling
 
+### Prerequisites
+
 Install the <code>mips-linux-gcc</code> cross toolchain:
 
     wget https://www.broadcom.com/docs/support/stb/stbgcc-4.8-1.0.tar.bz2
@@ -12,12 +14,21 @@ Install the <code>mips-linux-gcc</code> cross toolchain:
 (or pick any other suitable 32-bit MIPS BE toolchain
 [from this list](http://www.linux-mips.org/wiki/Toolchains))
 
+Install the Device Tree Compiler, either
+[from source](http://www.devicetree.org/Device_Tree_Compiler) or from a
+distribution package, e.g.
+
+    apt-get install device-tree-compiler
+    yum install dtc
+
 Then clone the bootloader and kernel source trees:
 
     git clone git://github.com/Broadcom/aeolus.git
     git clone -b bmips-multi-v2 git://github.com/cernekee/linux.git
 
-To build:
+### Build process
+
+Typical usage:
 
     export PATH=/opt/toolchains/stbgcc-4.8-1.0/bin:$PATH
     cd aeolus
