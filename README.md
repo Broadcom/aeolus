@@ -21,6 +21,11 @@ distribution package, e.g.
     apt-get install device-tree-compiler
     yum install dtc
 
+Install the other miscellaneous development tools:
+
+    apt-get install build-essential texinfo
+    yum groupinstall "Development Tools"
+
 Then clone the bootloader and kernel source trees:
 
     git clone git://github.com/Broadcom/aeolus.git
