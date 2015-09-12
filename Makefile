@@ -93,7 +93,7 @@ endif
 	touch $@
 
 board.dtb:
-	$(DTC) -O dtb -o $@ $(LINUXDIR)/arch/mips/boot/dts/$(DEFAULT_BOARD).dts
+	$(DTC) -O dtb -o $@ $(LINUXDIR)/arch/mips/boot/dts/brcm/$(DEFAULT_BOARD).dts
 
 .PHONY: $(LINUXDIR)/vmlinux
 $(LINUXDIR)/vmlinux: $(LINUXDIR)/.linux-configured
