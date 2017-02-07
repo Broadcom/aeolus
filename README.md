@@ -7,7 +7,7 @@ Aeolus: a program to boot the Zephyr MIPS
 
 Install the <code>mips-linux-gcc</code> cross toolchain:
 
-    wget https://www.broadcom.com/docs/support/stb/stbgcc-4.8-1.0.tar.bz2
+    wget https://github.com/Broadcom/stbgcc-4.8/releases/download/stbgcc-4.8-1.0/stbgcc-4.8-1.0.tar.bz2
     mkdir -p /opt/toolchains
     tar -C /opt/toolchains -jxf stbgcc-4.8-1.0.tar.bz2
 
