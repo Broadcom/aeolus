@@ -63,8 +63,8 @@ DVIFILES = standards.dvi configure.dvi
 PDFFILES = standards.pdf configure.pdf
 HTMLFILES = standards.html configure.html
 
-all: info
-install install-strip: install-info
+all:
+install install-strip:
 
 uninstall:
 
