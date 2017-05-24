@@ -16,6 +16,7 @@
 #include "regdef.h"
 
 	.section .mipsinit,"ax"
+	.set	mips32
 
 /**********************************************************************
  *  Bitfield macros
